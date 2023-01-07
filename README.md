@@ -1,17 +1,15 @@
-# Canis_Mini_Firmware
+# Canis Minor Firmware
 
 ## Description:
-This is the firmware used by AC Robotics' Canis Bot
+This is the firmware used by AC Robotics' Canis Bot. Uses ROS to listen to motor command positions and move motors to those positions. Inverse kinematics and Gait done by RPi.
 
 ## Install Directions
 1. Install ProjectIO in VScode
 (Not mandatory but other people can help with the install in VSCode as opposed to other IDEs)
-2. In .pio/libdeps/(microcontroller)/TimedAction/TimemdAction.h change "WProgram.h" to <Arduino.h> to fix this error: https://forum.arduino.cc/t/wprogram-h-no-such-file-or-directory/144185
 
 ## Uses:
 1. Driving Servo Motors
-2. Inverse Kinematics
-3. Walking Gait
 
 ## Dependencies
--TBD
+- ROS 
+- Adafruit Servo Driver Library

@@ -6,10 +6,17 @@
 #include "robot_constant.h"
 #include "kinematics.h"
 #include "motor_drive.h"
-#include "gait_shape.h"
+#include "ros_connect.h"
+#include "multithreading.h"
+#include "access_point.h"
+//#include "imu.h"
 
 #include <Wire.h>
+
 #include <Adafruit_PWMServoDriver.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+
 
 /* This is the main file for the CANIS_mini arduino controller
  *  
@@ -22,36 +29,28 @@
  * 
  */ 
 
-
-// ####### Threads ########
-// TimedAction moveLegsThread = TimedAction(1000,updateLegs);
-
-
+//Threads
+//TimedAction wifiThread = TimedAction(1000,wifiCheck);
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+Adafruit_MPU6050 mpu = Adafruit_MPU6050();
 
-gaitShape gait;
+sensors_event_t a, g, temp;
 
-double robot_height_desired = -0.17;
+double superior_right_shoulder_abductor_pos = 0;
+double superior_left_shoulder_abductor_pos = 0;
+double inferior_right_shoulder_abductor_pos = 0;
+double inferior_left_shoulder_abductor_pos = 0;
 
-double front_joint_dist = 0.1;
-double back_joint_dist = 0.1;
-double side_joint_dist = 0.1;
+double superior_right_arm_extensor_pos = 1.45;
+double superior_left_arm_extensor_pos = 1.45;
+double inferior_right_arm_extensor_pos = 1.45;
+double inferior_left_arm_extensor_pos = 1.45;
 
-double superior_right_shoulder_abductor_pos = 0;  // Stores servo position in degrees from 0 to 180
-double superior_left_shoulder_abductor_pos = 0;  // Stores servo position in degrees from 0 to 180
-double inferior_right_shoulder_abductor_pos = 0;  // Stores servo position in degrees from 0 to 180
-double inferior_left_shoulder_abductor_pos = 0;  // Stores servo position in degrees from 0 to 180
-
-double superior_right_arm_extensor_pos = 1.45;  // Stores servo position in degrees from 0 to 180
-double superior_left_arm_extensor_pos = 1.45;  // Stores servo position in degrees from 0 to 180
-double inferior_right_arm_extensor_pos = 1.45;  // Stores servo position in degrees from 0 to 180
-double inferior_left_arm_extensor_pos = 1.45;  // Stores servo position in degrees from 0 to 180
-
-double superior_right_forearm_extensor_pos = 2.32;  // Stores servo position in degrees from 0 to 180
-double superior_left_forearm_extensor_pos = 2.32;  // Stores servo position in degrees from 0 to 180
-double inferior_right_forearm_extensor_pos = 2.32;  // Stores servo position in degrees from 0 to 180
-double inferior_left_forearm_extensor_pos = 2.32;  // Stores servo position in degrees from 0 to 180
+double superior_right_forearm_extensor_pos = 2.32;
+double superior_left_forearm_extensor_pos = 2.32;
+double inferior_right_forearm_extensor_pos = 2.32;
+double inferior_left_forearm_extensor_pos = 2.32;
 
 double superior_right_shoulder_abductor_offset = -50; // Stores servo position offset in degrees from 0 to 180
 double superior_left_shoulder_abductor_offset = 20;  // Stores servo position offset in degrees from 0 to 180
@@ -68,65 +67,67 @@ double superior_left_forearm_extensor_offset = 204;  // Stores servo position of
 double inferior_right_forearm_extensor_offset = -165;  // Stores servo position offset in degrees from 0 to 180
 double inferior_left_forearm_extensor_offset = 160;  // Stores servo position offset in degrees from 0 to 180
 
-int superior_right_shoulder_abductor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int superior_left_shoulder_abductor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int inferior_right_shoulder_abductor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int inferior_left_shoulder_abductor_pwm = 0;  // Stores servo position in degrees from 0 to 180
+int superior_right_shoulder_abductor_pwm = 0;
+int superior_left_shoulder_abductor_pwm = 0;
+int inferior_right_shoulder_abductor_pwm = 0;
+int inferior_left_shoulder_abductor_pwm = 0;
 
-int superior_right_arm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int superior_left_arm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int inferior_right_arm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int inferior_left_arm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
+int superior_right_arm_extensor_pwm = 0;
+int superior_left_arm_extensor_pwm = 0;
+int inferior_right_arm_extensor_pwm = 0;
+int inferior_left_arm_extensor_pwm = 0;
 
-int superior_right_forearm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int superior_left_forearm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int inferior_right_forearm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
-int inferior_left_forearm_extensor_pwm = 0;  // Stores servo position in degrees from 0 to 180
+int superior_right_forearm_extensor_pwm = 0;
+int superior_left_forearm_extensor_pwm = 0;
+int inferior_right_forearm_extensor_pwm = 0;
+int inferior_left_forearm_extensor_pwm = 0;
 
-double superior_right_x = 0;    // Stores bot legs x, y, & z positions for each leg
-double superior_right_y = 0.055;    // Stores bot legs x, y, & z positions for each leg
-double superior_right_z = -0.15;    // Stores bot legs x, y, & z positions for each leg
+double superior_right_x = 0;
+double superior_right_y = 0.055;
+double superior_right_z = -0.15;
 
-double superior_left_x = 0;     // Stores bot legs x, y, & z positions for each leg
-double superior_left_y = 0.055;     // Stores bot legs x, y, & z positions for each leg
-double superior_left_z = -0.15;     // Stores bot legs x, y, & z positions for each leg
+double superior_left_x = 0; 
+double superior_left_y = 0.055; 
+double superior_left_z = -0.15; 
 
-double inferior_right_x = -0.05;    // Stores bot legs x, y, & z positions for each leg
-double inferior_right_y = 0.055;    // Stores bot legs x, y, & z positions for each leg
-double inferior_right_z = -0.15;    // Stores bot legs x, y, & z positions for each leg
+double inferior_right_x = -0.05;
+double inferior_right_y = 0.055;
+double inferior_right_z = -0.15;
 
-double inferior_left_x = -0.05;     // Stores bot legs x, y, & z positions for each leg
-double inferior_left_y = 0.055;     // Stores bot legs x, y, & z positions for each leg
-double inferior_left_z = -0.15;     // Stores bot legs x, y, & z positions for each leg
+double inferior_left_x = -0.05; 
+double inferior_left_y = 0.055; 
+double inferior_left_z = -0.15; 
 
-// Canis Body Params, measure from joint center
-double canis_length = 0.215;
-double canis_width = 0.23;
 
 double shoulder_length = 0.055;
 double arm_length = 0.105;
 double forearm_length = 0.136;
 
-// myservo.write(pos); // To drive servo, must add in delay, amount tbd
-
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  nh.getHardware()->setBaud(115200);
   Serial.println("Initting");
   init_motors();
   initROS();
   initWifi();
+<<<<<<< HEAD
 
+=======
+>>>>>>> d17d37b1119b399fe22b15bdd9f553b59785138d
   //debug_msg.data = "Test";
 }
 
 void loop() {
 
+<<<<<<< HEAD
   std::ostringstream os;
   os << superior_right_forearm_extensor_pwm;
 
   debug_msg.data = os.str().c_str();
   //debug_pub.publish(&debug_msg);
 
+=======
+>>>>>>> d17d37b1119b399fe22b15bdd9f553b59785138d
   nh.spinOnce();
   //pub_imu_raw();
 

@@ -6,24 +6,6 @@
 #define RAD_TO_DEG 180.0 / M_PI
 
 void ik() {
-    /*
-    superior_right_x = gait.frontRight.x;
-    superior_right_y = gait.frontRight.y;
-    superior_right_z = gait.frontRight.z;
-
-    superior_left_x = gait.frontLeft.x;
-    superior_left_y = gait.frontLeft.y;
-    superior_left_z = gait.frontLeft.z;
-
-    inferior_right_x = gait.rearRight.x;
-    inferior_right_y = gait.rearRight.y;
-    inferior_right_z = gait.rearRight.z;
-
-    inferior_left_x = gait.rearLeft.x;
-    inferior_left_y = gait.rearLeft.y;
-    inferior_left_z = gait.rearLeft.z;
-
-    */
     double superior_right_dyz = sqrt(superior_right_y * superior_right_y + superior_right_z * superior_right_z);
     double superior_left_dyz = sqrt(superior_left_y * superior_left_y + superior_left_z * superior_left_z);
     double inferior_right_dyz = sqrt(inferior_right_y * inferior_right_y + inferior_right_z * inferior_right_z);
