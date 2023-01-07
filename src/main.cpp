@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include <iostream>
+#include <sstream>
 
 #include "pin_map.h"
 #include "robot_constant.h"
@@ -111,55 +113,21 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Initting");
   init_motors();
+  initROS();
+  initWifi();
+
+  //debug_msg.data = "Test";
 }
 
 void loop() {
 
-  for (double z = 0; z < 2 * M_PI; z += 0.01) {
-    superior_right_z = -0.15 + 0.05 * sin(z);
-    superior_left_z = -0.15 + 0.05 * sin(z);
-    inferior_right_z = -0.15 + 0.05 * sin(z);
-    inferior_left_z = -0.15 + 0.05 * sin(z);
-    ik();
-    command_motors();
-    delay(0.1);
-  }
+  std::ostringstream os;
+  os << superior_right_forearm_extensor_pwm;
 
-    //ik();
-    /*Serial.print("SR Abd ");
-    Serial.println(superior_right_shoulder_abductor_pos);
-    Serial.print("SL Abd ");
-    Serial.println(superior_left_shoulder_abductor_pos);
-    Serial.print("IR Abd ");
-    Serial.println(inferior_right_shoulder_abductor_pos);
-    Serial.print("IL Abd ");
-    Serial.println(inferior_left_shoulder_abductor_pos);
+  debug_msg.data = os.str().c_str();
+  //debug_pub.publish(&debug_msg);
 
-    Serial.print("SR Arm Ext ");
-    Serial.println(superior_right_arm_extensor_pos);
-    Serial.print("SL Arm Ext ");
-    Serial.println(superior_left_arm_extensor_pos);
-    Serial.print("IR Arm Ext ");
-    Serial.println(inferior_right_arm_extensor_pos);
-    Serial.print("IL Arm Ext ");
-    Serial.println(inferior_left_arm_extensor_pos);
+  nh.spinOnce();
+  //pub_imu_raw();
 
-    Serial.print("SR Forearm Ext ");
-    Serial.println(superior_right_forearm_extensor_pos);
-    Serial.print("SL Forearm Ext ");
-    Serial.println(superior_left_forearm_extensor_pos);
-    Serial.print("IR Forearm Ext ");
-    Serial.println(inferior_right_forearm_extensor_pos);
-    Serial.print("IL Forearm Ext ");
-    Serial.println(inferior_left_forearm_extensor_pos);*/
-    //command_motors();
-
-
-    
-    
-
-    //Serial.print('\n');
-
-
-  //}
 }
