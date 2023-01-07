@@ -98,7 +98,6 @@ double inferior_left_x = -0.05;
 double inferior_left_y = 0.055; 
 double inferior_left_z = -0.15; 
 
-
 double shoulder_length = 0.055;
 double arm_length = 0.105;
 double forearm_length = 0.136;
@@ -110,24 +109,17 @@ void setup() {
   init_motors();
   initROS();
   initWifi();
-<<<<<<< HEAD
-
-=======
->>>>>>> d17d37b1119b399fe22b15bdd9f553b59785138d
   //debug_msg.data = "Test";
 }
 
 void loop() {
 
-<<<<<<< HEAD
   std::ostringstream os;
   os << superior_right_forearm_extensor_pwm;
 
   debug_msg.data = os.str().c_str();
   //debug_pub.publish(&debug_msg);
 
-=======
->>>>>>> d17d37b1119b399fe22b15bdd9f553b59785138d
   nh.spinOnce();
   //pub_imu_raw();
 
