@@ -17,7 +17,7 @@ uint8_t servonum = 0;
 void init_motors() {
 
     pwm.begin();
-    Serial.println("Initting");
+    //Serial.println("Initting");
     pwm.setOscillatorFrequency(27000000); //set w/ ossicloscope?
     pwm.setPWMFreq(SERVO_FREQ);
 

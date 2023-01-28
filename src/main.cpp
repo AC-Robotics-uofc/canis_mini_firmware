@@ -105,7 +105,7 @@ double forearm_length = 0.136;
 void setup() {
   Serial.begin(115200);
   nh.getHardware()->setBaud(115200);
-  Serial.println("Initting");
+  //Serial.println("Initting");
   init_motors();
   initROS();
   initWifi();
@@ -114,10 +114,10 @@ void setup() {
 
 void loop() {
 
-  std::ostringstream os;
-  os << superior_right_forearm_extensor_pwm;
+  //std::ostringstream os;
+  //os << superior_right_forearm_extensor_pwm;
 
-  debug_msg.data = os.str().c_str();
+  //debug_msg.data = os.str().c_str();
   //debug_pub.publish(&debug_msg);
 
   nh.spinOnce();
