@@ -17,7 +17,7 @@ uint8_t servonum = 0;
 void init_motors() {
 
     pwm.begin();
-    Serial.println("Initting");
+    //Serial.println("Initting");
     pwm.setOscillatorFrequency(27000000); //set w/ ossicloscope?
     pwm.setPWMFreq(SERVO_FREQ);
 
@@ -30,10 +30,10 @@ void command_motors() {
     inferior_right_shoulder_abductor_pwm = map2(inferior_right_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + inferior_right_shoulder_abductor_offset;
     inferior_left_shoulder_abductor_pwm = map2(inferior_left_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + inferior_left_shoulder_abductor_offset;
 
-    superior_right_arm_extensor_pwm = map2(superior_right_arm_extensor_pos, -1.7831, 1.6133, 500, 100) + superior_right_arm_extensor_offset;
-    superior_left_arm_extensor_pwm = map2(superior_left_arm_extensor_pos, -1.7831, 1.6133, 80, 480) + superior_left_arm_extensor_offset;
-    inferior_right_arm_extensor_pwm = map2(inferior_right_arm_extensor_pos, -1.4434, 1.6982, 460, 90) + inferior_right_arm_extensor_offset;
-    inferior_left_arm_extensor_pwm = map2(inferior_left_arm_extensor_pos, -1.4434, 1.6982, 120, 490) + inferior_left_arm_extensor_offset;
+    superior_right_arm_extensor_pwm = map2(superior_right_arm_extensor_pos, -1.5708, 1.5708, 475, 115) + superior_right_arm_extensor_offset;
+    superior_left_arm_extensor_pwm = map2(superior_left_arm_extensor_pos, -1.5708, 1.5708, 113, 470) + superior_left_arm_extensor_offset; // need to rotate servo
+    inferior_right_arm_extensor_pwm = map2(inferior_right_arm_extensor_pos, -1.5708, 1.5708, 460, 105) + inferior_right_arm_extensor_offset;
+    inferior_left_arm_extensor_pwm = map2(inferior_left_arm_extensor_pos, -1.5708, 1.5708, 125, 485) + inferior_left_arm_extensor_offset;
 
     superior_right_forearm_extensor_pwm = map2(superior_right_forearm_extensor_pos, -0.933987, 2.7171, 180, 610) + superior_right_forearm_extensor_offset;
     superior_left_forearm_extensor_pwm = map2(superior_left_forearm_extensor_pos, 0, 2.80196, 290, -40) + superior_left_forearm_extensor_offset;
@@ -59,7 +59,7 @@ void command_motors() {
 }
 
 void superior_right_shoulder_abductor_cb(const std_msgs::Float64 &superior_right_shoulder_pos_msg) {
-    superior_right_shoulder_abductor_pwm = map2(superior_right_shoulder_pos_msg.data, -1.104, 1.2736, 160, 440) + superior_right_shoulder_abductor_offset;
+    superior_right_shoulder_abductor_pwm = map2(superior_right_shoulder_pos_msg.data, -0.5945, 1.2736, 220, 440) + superior_right_shoulder_abductor_offset;
     pwm.setPWM(0, 0, superior_right_shoulder_abductor_pwm);
 }
 void superior_left_shoulder_abductor_cb(const std_msgs::Float64 &superior_left_shoulder_pos_msg) {

@@ -31,20 +31,20 @@ sensor_msgs::Imu imu_msg;
 ros::Publisher debug_pub("/debug", &debug_msg);
 ros::Publisher imu_pub("/imu/data_raw", &imu_msg);
 
-ros::Subscriber<std_msgs::Float64> superior_right_shoulder_abductor_sub("/actuation/leg/shoulder/superior/right", &superior_right_shoulder_abductor_cb);
-ros::Subscriber<std_msgs::Float64> superior_left_shoulder_abductor_sub("/actuation/leg/shoulder/superior/left", &superior_left_shoulder_abductor_cb);
-ros::Subscriber<std_msgs::Float64> inferior_right_shoulder_abductor_sub("/actuation/leg/shoulder/inferior/right", &inferior_right_shoulder_abductor_cb);
-ros::Subscriber<std_msgs::Float64> inferior_left_shoulder_abductor_sub("/actuation/leg/shoulder/inferior/left", &inferior_left_shoulder_abductor_cb);
+ros::Subscriber<std_msgs::Float64> superior_right_shoulder_abductor_sub("/command/leg/angle/shoulder/superior/right", &superior_right_shoulder_abductor_cb);
+ros::Subscriber<std_msgs::Float64> superior_left_shoulder_abductor_sub("/command/leg/angle/shoulder/superior/left", &superior_left_shoulder_abductor_cb);
+ros::Subscriber<std_msgs::Float64> inferior_right_shoulder_abductor_sub("/command/leg/angle/shoulder/inferior/right", &inferior_right_shoulder_abductor_cb);
+ros::Subscriber<std_msgs::Float64> inferior_left_shoulder_abductor_sub("/command/leg/angle/shoulder/inferior/left", &inferior_left_shoulder_abductor_cb);
 
-ros::Subscriber<std_msgs::Float64> superior_right_arm_extensor_sub("/actuation/leg/arm/superior/right", &superior_right_arm_extensor_cb);
-ros::Subscriber<std_msgs::Float64> superior_left_arm_extensor_sub("/actuation/leg/arm/superior/left", &superior_left_arm_extensor_cb);
-ros::Subscriber<std_msgs::Float64> inferior_right_arm_extensor_sub("/actuation/leg/arm/inferior/right", &inferior_right_arm_extensor_cb);
-ros::Subscriber<std_msgs::Float64> inferior_left_arm_extensor_sub("/actuation/leg/arm/inferior/left", &inferior_left_arm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> superior_right_arm_extensor_sub("/command/leg/angle/arm/superior/right", &superior_right_arm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> superior_left_arm_extensor_sub("/command/leg/angle/arm/superior/left", &superior_left_arm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> inferior_right_arm_extensor_sub("/command/leg/angle/arm/inferior/right", &inferior_right_arm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> inferior_left_arm_extensor_sub("/command/leg/angle/arm/inferior/left", &inferior_left_arm_extensor_cb);
 
-ros::Subscriber<std_msgs::Float64> superior_right_forearm_extensor_sub("/actuation/leg/forearm/superior/right", &superior_right_forearm_extensor_cb);
-ros::Subscriber<std_msgs::Float64> superior_left_forearm_extensor_sub("/actuation/leg/forearm/superior/left", &superior_left_forearm_extensor_cb);
-ros::Subscriber<std_msgs::Float64> inferior_right_forearm_extensor_sub("/actuation/leg/forearm/inferior/right", &inferior_right_forearm_extensor_cb);
-ros::Subscriber<std_msgs::Float64> inferior_left_forearm_extensor_sub("/actuation/leg/forearm/inferior/left", &inferior_left_forearm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> superior_right_forearm_extensor_sub("/command/leg/angle/forearm/superior/right", &superior_right_forearm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> superior_left_forearm_extensor_sub("/command/leg/angle/forearm/superior/left", &superior_left_forearm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> inferior_right_forearm_extensor_sub("/command/leg/angle/forearm/inferior/right", &inferior_right_forearm_extensor_cb);
+ros::Subscriber<std_msgs::Float64> inferior_left_forearm_extensor_sub("/command/leg/angle/forearm/inferior/left", &inferior_left_forearm_extensor_cb);
     
 
 void superior_right_shoulder_abductor_cb(const std_msgs::Float64 &superior_right_shoulder_pos_msg);
