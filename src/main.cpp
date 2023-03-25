@@ -98,9 +98,9 @@ double inferior_left_x = -0.05;
 double inferior_left_y = 0.055; 
 double inferior_left_z = -0.15; 
 
-double shoulder_length = 0.055;
-double arm_length = 0.105;
-double forearm_length = 0.136;
+double shoulder_length = 0.060;
+double arm_length = 0.107;
+double forearm_length = 0.135;
 
 void setup() {
   Serial.begin(115200);
@@ -120,6 +120,7 @@ void loop() {
   //debug_msg.data = os.str().c_str();
   //debug_pub.publish(&debug_msg);
 
+  //command_motors();
   nh.spinOnce();
   //pub_imu_raw();
 
