@@ -102,6 +102,10 @@ double shoulder_length = 0.055;
 double arm_length = 0.105;
 double forearm_length = 0.136;
 
+void getOffset(double offset){
+  inferior_left_forearm_extensor_offset = offset;
+}
+
 void setup() {
   Serial.begin(115200);
   nh.getHardware()->setBaud(115200);
@@ -120,7 +124,16 @@ void loop() {
   //debug_msg.data = os.str().c_str();
   //debug_pub.publish(&debug_msg);
 
-  nh.spinOnce();
+  //nh.spinOnce();
   //pub_imu_raw();
+
+  while (Serial.available() == 0) {
+  }
+
+  getOffset(Serial.parseFloat());
+
+  ik();
+  command_motors();
+  nh.spinOnce();
 
 }
