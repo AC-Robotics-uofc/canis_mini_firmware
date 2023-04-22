@@ -42,30 +42,30 @@ double superior_left_shoulder_abductor_pos = 0;
 double inferior_right_shoulder_abductor_pos = 0;
 double inferior_left_shoulder_abductor_pos = 0;
 
-double superior_right_arm_extensor_pos = 1.45;
-double superior_left_arm_extensor_pos = 1.45;
-double inferior_right_arm_extensor_pos = 1.45;
-double inferior_left_arm_extensor_pos = 1.45;//1.45;
+double superior_right_arm_extensor_pos = 0;
+double superior_left_arm_extensor_pos = 0;
+double inferior_right_arm_extensor_pos = 0;
+double inferior_left_arm_extensor_pos = 0;//1.45;
 
-double superior_right_forearm_extensor_pos = 2.32; //2.32;
-double superior_left_forearm_extensor_pos = 2.32;
-double inferior_right_forearm_extensor_pos = 2.32;
-double inferior_left_forearm_extensor_pos = 2.32;
+double superior_right_forearm_extensor_pos = 0; //2.32;
+double superior_left_forearm_extensor_pos = 0;
+double inferior_right_forearm_extensor_pos = 0;
+double inferior_left_forearm_extensor_pos = 0;
 
-double superior_right_shoulder_abductor_offset = 30; // Stores servo position offset in degrees from 0 to 180
-double superior_left_shoulder_abductor_offset = -150;  // Stores servo position offset in degrees from 0 to 180
-double inferior_right_shoulder_abductor_offset = -160;  // Stores servo position offset in degrees from 0 to 180
-double inferior_left_shoulder_abductor_offset = 60;  // Stores servo position offset in degrees from 0 to 180
+double superior_right_shoulder_abductor_offset = 70; // Stores servo position offset in degrees from 0 to 180
+double superior_left_shoulder_abductor_offset = -140;  // Stores servo position offset in degrees from 0 to 180
+double inferior_right_shoulder_abductor_offset = -150;  // Stores servo position offset in degrees from 0 to 180
+double inferior_left_shoulder_abductor_offset = -80;  // Stores servo position offset in degrees from 0 to 180
 
-double superior_right_arm_extensor_offset = -10;  // Stores servo position offset in degrees from 0 to 180
-double superior_left_arm_extensor_offset = -50;  // Stores servo position offset in degrees from 0 to 180
-double inferior_right_arm_extensor_offset = -10;  // Stores servo position offset in degrees from 0 to 180
-double inferior_left_arm_extensor_offset = -25;  // Stores servo position offset in degrees from 0 to 180
+double superior_right_arm_extensor_offset = 150;  // Stores servo position offset in degrees from 0 to 180
+double superior_left_arm_extensor_offset = -150;  // Stores servo position offset in degrees from 0 to 180
+double inferior_right_arm_extensor_offset = 180;  // Stores servo position offset in degrees from 0 to 180
+double inferior_left_arm_extensor_offset = -240;  // Stores servo position offset in degrees from 0 to 180
 
-double superior_right_forearm_extensor_offset = -150;  // Stores servo position offset in degrees from 0 to 180
-double superior_left_forearm_extensor_offset = 110;  // Stores servo position offset in degrees from 0 to 180
-double inferior_right_forearm_extensor_offset = -125;  // Stores servo position offset in degrees from 0 to 180
-double inferior_left_forearm_extensor_offset = 60;  // Stores servo position offset in degrees from 0 to 180
+double superior_right_forearm_extensor_offset = -330;  // Stores servo position offset in degrees from 0 to 180
+double superior_left_forearm_extensor_offset = 350;  // Stores servo position offset in degrees from 0 to 180
+double inferior_right_forearm_extensor_offset = -320;  // Stores servo position offset in degrees from 0 to 180
+double inferior_left_forearm_extensor_offset = 400;  // Stores servo position offset in degrees from 0 to 180
 
 int superior_right_shoulder_abductor_pwm = 0;
 int superior_left_shoulder_abductor_pwm = 0;
@@ -107,8 +107,6 @@ void getOffset(double offset){
 }
 
 void setup() {
-  Serial.begin(115200);
-  nh.getHardware()->setBaud(115200);
   //Serial.println("Initting");
   init_motors();
   initROS();
@@ -118,19 +116,14 @@ void setup() {
 
 void loop() {
 
-  //std::ostringstream os;
-  //os << superior_right_forearm_extensor_pwm;
+  std::ostringstream os;
+  os << superior_right_forearm_extensor_pwm;
 
   //debug_msg.data = os.str().c_str();
   //debug_pub.publish(&debug_msg);
 
   //nh.spinOnce();
   //pub_imu_raw();
-
-  while (Serial.available() == 0) {
-  }
-
-  getOffset(Serial.parseFloat());
 
   ik();
   command_motors();
