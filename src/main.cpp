@@ -57,15 +57,15 @@ double superior_left_shoulder_abductor_offset = -140;  // Stores servo position 
 double inferior_right_shoulder_abductor_offset = -150;  // Stores servo position offset in degrees from 0 to 180
 double inferior_left_shoulder_abductor_offset = -80;  // Stores servo position offset in degrees from 0 to 180
 
-double superior_right_arm_extensor_offset = 150;  // Stores servo position offset in degrees from 0 to 180
-double superior_left_arm_extensor_offset = -150;  // Stores servo position offset in degrees from 0 to 180
-double inferior_right_arm_extensor_offset = 180;  // Stores servo position offset in degrees from 0 to 180
-double inferior_left_arm_extensor_offset = -240;  // Stores servo position offset in degrees from 0 to 180
+double superior_right_arm_extensor_offset = 10;  // Stores servo position offset in degrees from 0 to 180
+double superior_left_arm_extensor_offset = -10;  // Stores servo position offset in degrees from 0 to 180
+double inferior_right_arm_extensor_offset = 10;  // Stores servo position offset in degrees from 0 to 180
+double inferior_left_arm_extensor_offset = -60;  // Stores servo position offset in degrees from 0 to 180
 
-double superior_right_forearm_extensor_offset = -330;  // Stores servo position offset in degrees from 0 to 180
-double superior_left_forearm_extensor_offset = 350;  // Stores servo position offset in degrees from 0 to 180
-double inferior_right_forearm_extensor_offset = -320;  // Stores servo position offset in degrees from 0 to 180
-double inferior_left_forearm_extensor_offset = 400;  // Stores servo position offset in degrees from 0 to 180
+double superior_right_forearm_extensor_offset = -110;  // Stores servo position offset in degrees from 0 to 180
+double superior_left_forearm_extensor_offset = 150;  // Stores servo position offset in degrees from 0 to 180
+double inferior_right_forearm_extensor_offset = -90;  // Stores servo position offset in degrees from 0 to 180
+double inferior_left_forearm_extensor_offset = 180;  // Stores servo position offset in degrees from 0 to 180
 
 int superior_right_shoulder_abductor_pwm = 0;
 int superior_left_shoulder_abductor_pwm = 0;
@@ -125,7 +125,7 @@ void loop() {
   //nh.spinOnce();
   //pub_imu_raw();
 
-  ik();
+  //ik();
   command_motors();
   nh.spinOnce();
 
