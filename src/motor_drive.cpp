@@ -9,8 +9,6 @@
 
 uint8_t servonum = 0;
 
-
-
 // See this lib: https://learn.adafruit.com/16-channel-pwm-servo-driver?view=all
 //pulselength = map(degrees, 0, 180, SERVOMIN, SERVOMAX);  for ease of use
 
@@ -21,6 +19,52 @@ void init_motors() {
     pwm.setOscillatorFrequency(27000000); //set w/ ossicloscope?
     pwm.setPWMFreq(SERVO_FREQ);
 
+}
+
+void test_position_update(){
+    // if((test_value < 60) || (test_value > 520))
+    //     return;
+
+    switch(test_pin){
+        case 0:
+            superior_right_shoulder_abductor_pwm = test_value;
+            break;    
+        case 1:
+            superior_left_shoulder_abductor_pwm = test_value;
+            break;
+        case 2:
+            inferior_right_shoulder_abductor_pwm = test_value;
+            break;
+        case 3:
+            inferior_left_shoulder_abductor_pwm = test_value;
+            break;
+        case 4:
+            superior_right_arm_extensor_pwm = test_value;
+            break;
+        case 5:
+            superior_left_arm_extensor_pwm = test_value;
+            break;
+        case 6:
+            inferior_right_arm_extensor_pwm = test_value;
+            break;
+        case 7:
+            inferior_left_arm_extensor_pwm = test_value;
+            break;
+        case 8:
+            superior_right_forearm_extensor_pwm = test_value;
+            break;
+        case 9:
+            superior_left_forearm_extensor_pwm = test_value;
+            break;
+        case 10:
+            inferior_right_forearm_extensor_pwm = test_value;
+            break;
+        case 11:
+            inferior_left_forearm_extensor_pwm = test_value;
+            break;
+        default:
+            break;
+    }
 }
 
 void command_motors() {
@@ -40,6 +84,9 @@ void command_motors() {
     inferior_right_forearm_extensor_pwm = map2(inferior_right_forearm_extensor_pos, -0.2547, 2.8869, 260, 630) + inferior_right_forearm_extensor_offset;
     inferior_left_forearm_extensor_pwm = map2(inferior_left_forearm_extensor_pos, -0.33963, 2.46233, 330, 0) + inferior_left_forearm_extensor_offset;
 
+    if(test_value > 0){
+        test_position_update();
+    }
 
     pwm.setPWM(0, 0, superior_right_shoulder_abductor_pwm);
     pwm.setPWM(1, 0, superior_left_shoulder_abductor_pwm);

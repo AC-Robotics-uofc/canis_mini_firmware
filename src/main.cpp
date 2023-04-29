@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <iostream>
 #include <sstream>
+#include <regex>
 
 #include "pin_map.h"
 #include "robot_constant.h"
@@ -102,9 +103,29 @@ double shoulder_length = 0.060;
 double arm_length = 0.107;
 double forearm_length = 0.135;
 
+int test_pin = 0;
+
+int test_value = -1;
+
+
+void test_pwm_cb(const std_msgs::String &test_pwm_msg){
+  std::string data = test_pwm_msg.data;
+  std::regex rgx("^([\\d]+)_([\\d]+)$");
+  std::smatch base_match;
+  if(!std::regex_match(data, base_match, rgx)){
+    std::string bitch = "Failed to match String: "+data;
+    debug_msg.data = bitch.c_str();
+    debug_pub.publish(&debug_msg);
+    return;
+  }
+
+  test_pin = std::stoi(base_match[1].str());
+  test_value = std::stoi(base_match[2].str());
+}
+
 void getOffset(double offset){
   inferior_left_forearm_extensor_offset = offset;
-}
+} 
 
 void setup() {
   //Serial.println("Initting");
@@ -119,8 +140,8 @@ void loop() {
   std::ostringstream os;
   os << superior_right_forearm_extensor_pwm;
 
-  //debug_msg.data = os.str().c_str();
-  //debug_pub.publish(&debug_msg);
+  // debug_msg.data = "bitch\n";
+  // debug_pub.publish(&debug_msg);
 
   //nh.spinOnce();
   //pub_imu_raw();
@@ -130,3 +151,5 @@ void loop() {
   nh.spinOnce();
 
 }
+
+

@@ -3,7 +3,7 @@
 #include <math.h>
 #include <Arduino.h>
 
-#define RAD_TO_DEG 180.0 / M_PI
+//#define RAD_TO_DEG 180.0 / M_PI
 
 void ik() {
     double superior_right_dyz = sqrt(superior_right_y * superior_right_y + superior_right_z * superior_right_z);

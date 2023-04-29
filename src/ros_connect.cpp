@@ -45,6 +45,8 @@ ros::Subscriber<std_msgs::Float64> superior_right_forearm_extensor_sub("/command
 ros::Subscriber<std_msgs::Float64> superior_left_forearm_extensor_sub("/command/leg/angle/forearm/superior/left", &superior_left_forearm_extensor_cb);
 ros::Subscriber<std_msgs::Float64> inferior_right_forearm_extensor_sub("/command/leg/angle/forearm/inferior/right", &inferior_right_forearm_extensor_cb);
 ros::Subscriber<std_msgs::Float64> inferior_left_forearm_extensor_sub("/command/leg/angle/forearm/inferior/left", &inferior_left_forearm_extensor_cb);
+
+ros::Subscriber<std_msgs::String> test_pwm_sub("/test_pwm", &test_pwm_cb);
     
 
 void superior_right_shoulder_abductor_cb(const std_msgs::Float64 &superior_right_shoulder_pos_msg);
@@ -81,6 +83,7 @@ void initROS() {
   nh.subscribe(inferior_right_forearm_extensor_sub);
   nh.subscribe(inferior_left_forearm_extensor_sub);
   
+  nh.subscribe(test_pwm_sub);
   // pub
   nh.advertise(debug_pub);
   nh.advertise(imu_pub);
