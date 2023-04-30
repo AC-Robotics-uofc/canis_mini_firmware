@@ -103,7 +103,7 @@ double shoulder_length = 0.060;
 double arm_length = 0.107;
 double forearm_length = 0.135;
 
-int test_pin = 0;
+int test_pin = -1;
 
 int test_value = -1;
 
