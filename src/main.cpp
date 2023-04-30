@@ -107,7 +107,12 @@ int test_pin = 0;
 
 int test_value = -1;
 
-
+/**
+ * Note a pwm message must be sent using command: rostopic pub /test_pwm std_msgs/String "'X_X'"
+ * @param test_pwm_msg A message in the form X_X where x are integers correlating to the desired pin and pwm value to be sent.
+ * 
+ * 
+*/
 void test_pwm_cb(const std_msgs::String &test_pwm_msg){
   std::string data = test_pwm_msg.data;
   std::regex rgx("^([\\d]+)_([\\d]+)$");
@@ -118,7 +123,12 @@ void test_pwm_cb(const std_msgs::String &test_pwm_msg){
     debug_pub.publish(&debug_msg);
     return;
   }
-
+  std::string message = "Writing pwm value ";
+  message += base_match[2];
+  message += "to pin ";
+  message += base_match[1];
+  debug_msg.data = message.c_str();
+  debug_pub.publish(&debug_msg);
   test_pin = std::stoi(base_match[1].str());
   test_value = std::stoi(base_match[2].str());
 }

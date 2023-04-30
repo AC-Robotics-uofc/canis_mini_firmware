@@ -22,9 +22,6 @@ void init_motors() {
 }
 
 void test_position_update(){
-    // if((test_value < 60) || (test_value > 520))
-    //     return;
-
     switch(test_pin){
         case 0:
             superior_right_shoulder_abductor_pwm = test_value;
@@ -69,25 +66,25 @@ void test_position_update(){
 
 void command_motors() {
 
-    superior_right_shoulder_abductor_pwm = map2(superior_right_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + superior_right_shoulder_abductor_offset;
-    superior_left_shoulder_abductor_pwm = map2(superior_left_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + superior_left_shoulder_abductor_offset;
-    inferior_right_shoulder_abductor_pwm = map2(inferior_right_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + inferior_right_shoulder_abductor_offset;
-    inferior_left_shoulder_abductor_pwm = map2(inferior_left_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + inferior_left_shoulder_abductor_offset;
-
-    superior_right_arm_extensor_pwm = map2(superior_right_arm_extensor_pos, -1.5708, 1.5708, 475, 115) + superior_right_arm_extensor_offset;
-    superior_left_arm_extensor_pwm = map2(superior_left_arm_extensor_pos, -1.5708, 1.5708, 113, 470) + superior_left_arm_extensor_offset; // need to rotate servo
-    inferior_right_arm_extensor_pwm = map2(inferior_right_arm_extensor_pos, -1.5708, 1.5708, 460, 105) + inferior_right_arm_extensor_offset;
-    inferior_left_arm_extensor_pwm = map2(inferior_left_arm_extensor_pos, -1.5708, 1.5708, 125, 485) + inferior_left_arm_extensor_offset;
-
-    superior_right_forearm_extensor_pwm = map2(superior_right_forearm_extensor_pos, -0.933987, 2.7171, 180, 610) + superior_right_forearm_extensor_offset;
-    superior_left_forearm_extensor_pwm = map2(superior_left_forearm_extensor_pos, 0, 2.80196, 290, -40) + superior_left_forearm_extensor_offset;
-    inferior_right_forearm_extensor_pwm = map2(inferior_right_forearm_extensor_pos, -0.2547, 2.8869, 260, 630) + inferior_right_forearm_extensor_offset;
-    inferior_left_forearm_extensor_pwm = map2(inferior_left_forearm_extensor_pos, -0.33963, 2.46233, 330, 0) + inferior_left_forearm_extensor_offset;
-
-    if(test_value > 0){
+    if(test_pin >= 0 && test_pin <= 11){
         test_position_update();
     }
+    else{
+        superior_right_shoulder_abductor_pwm = map2(superior_right_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + superior_right_shoulder_abductor_offset;
+        superior_left_shoulder_abductor_pwm = map2(superior_left_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + superior_left_shoulder_abductor_offset;
+        inferior_right_shoulder_abductor_pwm = map2(inferior_right_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + inferior_right_shoulder_abductor_offset;
+        inferior_left_shoulder_abductor_pwm = map2(inferior_left_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + inferior_left_shoulder_abductor_offset;
 
+        superior_right_arm_extensor_pwm = map2(superior_right_arm_extensor_pos, -1.5708, 1.5708, 475, 115) + superior_right_arm_extensor_offset;
+        superior_left_arm_extensor_pwm = map2(superior_left_arm_extensor_pos, -1.5708, 1.5708, 113, 470) + superior_left_arm_extensor_offset; // need to rotate servo
+        inferior_right_arm_extensor_pwm = map2(inferior_right_arm_extensor_pos, -1.5708, 1.5708, 460, 105) + inferior_right_arm_extensor_offset;
+        inferior_left_arm_extensor_pwm = map2(inferior_left_arm_extensor_pos, -1.5708, 1.5708, 125, 485) + inferior_left_arm_extensor_offset;
+
+        superior_right_forearm_extensor_pwm = map2(superior_right_forearm_extensor_pos, -0.933987, 2.7171, 180, 610) + superior_right_forearm_extensor_offset;
+        superior_left_forearm_extensor_pwm = map2(superior_left_forearm_extensor_pos, 0, 2.80196, 290, -40) + superior_left_forearm_extensor_offset;
+        inferior_right_forearm_extensor_pwm = map2(inferior_right_forearm_extensor_pos, -0.2547, 2.8869, 260, 630) + inferior_right_forearm_extensor_offset;
+        inferior_left_forearm_extensor_pwm = map2(inferior_left_forearm_extensor_pos, -0.33963, 2.46233, 330, 0) + inferior_left_forearm_extensor_offset;
+    }
     pwm.setPWM(0, 0, superior_right_shoulder_abductor_pwm);
     pwm.setPWM(1, 0, superior_left_shoulder_abductor_pwm);
     pwm.setPWM(2, 0, inferior_right_shoulder_abductor_pwm);
