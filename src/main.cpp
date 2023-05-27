@@ -157,7 +157,7 @@ void loop() {
   //pub_imu_raw();
 
   //ik();
-  command_motors();
+  // command_motors();
   nh.spinOnce();
 
 }
