@@ -72,7 +72,7 @@ void command_motors() {
     else{
         superior_right_shoulder_abductor_pwm = map2(superior_right_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + superior_right_shoulder_abductor_offset;
         superior_left_shoulder_abductor_pwm = map2(superior_left_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + superior_left_shoulder_abductor_offset;
-        inferior_right_shoulder_abductor_pwm = map2(inferior_right_shoulder_abductor_pos, -1.104, 1.2736, 420, 140) + inferior_right_shoulder_abductor_offset;
+        inferior_right_shoulder_abductor_pwm = map2(inferior_right_shoulder_abductor_pos, -1.104, 1.2736, 360, 80) + inferior_right_shoulder_abductor_offset;
         inferior_left_shoulder_abductor_pwm = map2(inferior_left_shoulder_abductor_pos, -1.104, 1.2736, 160, 440) + inferior_left_shoulder_abductor_offset;
 
         superior_right_arm_extensor_pwm = map2(superior_right_arm_extensor_pos, -1.5708, 1.5708, 475, 115) + superior_right_arm_extensor_offset;
