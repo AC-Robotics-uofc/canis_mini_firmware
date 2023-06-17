@@ -36,6 +36,9 @@ extern sensor_msgs::Imu imu_msg;
 extern ros::Publisher debug_pub;
 extern ros::Publisher imu_pub;
 
+
+extern std_msgs::String test_pwm_msg;
+
 // init
 void initROS();
 
@@ -54,5 +57,7 @@ void superior_right_forearm_extensor_cb(const std_msgs::Float64 &superior_right_
 void superior_left_forearm_extensor_cb(const std_msgs::Float64 &superior_left_forearm_pos_msg);
 void inferior_right_forearm_extensor_cb(const std_msgs::Float64 &inferior_right_forearm_pos_msg);
 void inferior_left_forearm_extensor_cb(const std_msgs::Float64 &inferior_left_forearm_pos_msg);
+
+void test_pwm_cb(const std_msgs::String &test_pwm_msg);
 
 #endif // INCLUDE_ROS_CONNECT_H
