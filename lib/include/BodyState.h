@@ -1,8 +1,15 @@
 #include "Gait.h"
+#include "stdint.h"
 
 #ifndef BODYSTATE
 #define BODYSTATE
 
+enum Leg{
+    superior_right,
+    superior_left,
+    inferior_right,
+    inferior_left
+};
 
 class BodyState{
 public:

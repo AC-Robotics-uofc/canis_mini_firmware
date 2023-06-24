@@ -1,5 +1,5 @@
-#include "../include/gait_executor.h"
-
+#include "gait_executor.h"
+#include "robot_params.h"
 // Functionality ######
 // Takes a vector of Gait positions and moves through them at a set speed
 // Stops Safely at the end
@@ -27,38 +27,6 @@
 #define inferior_left 3
 
 GaitExecutor::GaitExecutor(const ros::NodeHandle &nh_private_) {
-    
-    gait_sub = nh_.subscribe<robot_core::Gait>("/command/gait/next", 1000, &GaitExecutor::Gait_CB, this);
-    vel_sub = nh_.subscribe<geometry_msgs::TwistStamped>("/command/velocity", 1000, &GaitExecutor::Vel_CB, this);
-    reset_sub = nh_.subscribe<std_msgs::Bool>("/reset/gait", 1000, &GaitExecutor::Reset_CB, this);
-    manual_position_sub = nh_.subscribe<std_msgs::String>("/manual_position", 10, &GaitExecutor::manual_position_CB, this);
-    crouch_sub = nh_.subscribe<std_msgs::Bool>("/crouch", 10, &GaitExecutor::crouch_CB, this);
-    sit_sub = nh_.subscribe<std_msgs::Bool>("/sit", 10, &GaitExecutor::sit_CB, this);
-    lay_down_sub = nh_.subscribe<std_msgs::Bool>("/layDown", 10, &GaitExecutor::lay_down_CB, this);
-
-
-    sr_pub = nh_.advertise<geometry_msgs::PointStamped>("/command/leg/pos/superior/right", 1000);
-    sl_pub = nh_.advertise<geometry_msgs::PointStamped>("/command/leg/pos/superior/left", 1000);
-    ir_pub = nh_.advertise<geometry_msgs::PointStamped>("/command/leg/pos/inferior/right", 1000);
-    il_pub = nh_.advertise<geometry_msgs::PointStamped>("/command/leg/pos/inferior/left", 1000);
-
-    pose_pub = nh_.advertise<robot_core::Gait>("/odometry/gait/current", 1000);
-    pose_norm_pub = nh_.advertise<robot_core::Gait>("/debug/gait", 1000);
-    percent_pub = nh_.advertise<std_msgs::Float64>("/odometry/percent", 1000);
-
-    debug_pub = nh_.advertise<std_msgs::String>("/debug", 1000);
-
-    // #### Robot Params ####
-    nh_.param<double>("/shoulder_length", shoulder_length, 0.055);
-    nh_.param<double>("/arm_length", arm_length, 0.105);
-    nh_.param<double>("/forearm_length", forearm_length, 0.136);
-    nh_.param<double>("/body_width", body_width, 0.038);
-    nh_.param<double>("/center_to_front", center_to_front, 0.1);
-    nh_.param<double>("/center_to_back", center_to_back, 0.1);
-
-    nh_.param<double>("/frequency", operating_freq, 30);
-    nh_.param<double>("/walking_height", walking_z, 0.15);
-    nh_.param<double>("/step_height", step_height, 0.05);
 
     // #### Robot Gait Variables ####
     gait_current;

@@ -157,7 +157,7 @@ bool LegInverseKinematicsProcessor::calculate_inferior_right_leg_angles(){
 
 }
 
-bool LegInverseKinematicsProcessor::calculate_inferior_left_leg_angles()
+bool LegInverseKinematicsProcessor::calculate_inferior_left_leg_angles(){
 
     double inferior_left_x = Point->point.x;
     double inferior_left_y = -Point->point.y;
